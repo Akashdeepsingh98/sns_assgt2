@@ -16,23 +16,30 @@ ENCODING_RULE = {' ': 27}
 for i in range(0, 26):
     ENCODING_RULE[chr(i+ord('A'))] = i+1
 
+KEY = '1101'
+
 
 def getp(data):
-    while len(data)%3!=0:
-        data+=' '
+    while len(data) % 3 != 0:
+        data += ' '
     p = np.array([ENCODING_RULE[data[i]] for i in range(len(data))])
-    p = np.reshape(p,(3,len(data)//3),'F')
+    p = np.reshape(p, (3, len(data)//3), 'F')
     return p
 
-def getCRC(data):
-    
+
+def getCRC(data: str) -> str:
+    binString = (''.join(format(ord(x), 'b') for x in data))
+    newString = binString + '0' * (len(KEY)-1)
+    print(newString)
     pass
+
 
 def main():
     data = 'PENGUINS ARE ONE TO ONE'
-    p = getp(data)
-    encData = np.dot(CIPHER_MATRIX, p)
-    print(encData)
+    #p = getp(data)
+    #encData = np.dot(CIPHER_MATRIX, p)
+    # print(encData)
+    getCRC(data)
     pass
 
 
