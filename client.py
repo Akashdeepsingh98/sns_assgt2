@@ -1,5 +1,6 @@
 import numpy as np
 import socket
+import pickle
 
 CIPHER_MATRIX = np.array([
     [-3, -3, -4],
@@ -44,17 +45,26 @@ def getCRC(data: str) -> str:
     binString = (''.join(format(ord(x), 'b') for x in data))
     newString = binString + '0' * (len(KEY)-1)
     remainder = getRemainder(newString)
-    code = binString+remainder
-    return code
+    #code = binString+remainder
+    return remainder
 
 
 def main():
-    data = 'EVN'
+    data = input()
     p = getp(data)
     EncData = np.dot(CIPHER_MATRIX, p)
-    print(EncData)
     E = getCRC(data)
-    print(E)
+    
+    msgBytes = pickle.dumps(EncData)
+    EBytes = pickle.dumps(E)
+    
+    s = socket.socket()
+    port = 5001
+    s.connect(('127.0.0.1', port))
+
+    s.send(msgBytes)
+    s.send(EBytes)
+    s.close()
 
 
 if __name__ == '__main__':
