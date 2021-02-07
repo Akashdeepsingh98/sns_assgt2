@@ -75,7 +75,7 @@ def main():
     recText = decryptp(EncData)
     print('The received text is: ', end='')
     print(recText)
-    
+
     if getCRC(recText) == E:
         print('String is Correct')
     else:

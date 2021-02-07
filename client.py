@@ -54,10 +54,10 @@ def main():
     p = getp(data)
     EncData = np.dot(CIPHER_MATRIX, p)
     E = getCRC(data)
-    
+
     msgBytes = pickle.dumps(EncData)
     EBytes = pickle.dumps(E)
-    
+
     s = socket.socket()
     port = 5001
     s.connect(('127.0.0.1', port))
